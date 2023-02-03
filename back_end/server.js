@@ -1,7 +1,11 @@
 const express = require('express')  // Indicamos que usaremos express
+const colors = require('colors')
 const dotenv = require('dotenv').config() // indicamos que usaremos dotenv para variables de entorno y sus configuraciones
 const { errorHandler } = require('./middleware/errorMiddleware')
+const connectDB = require('./config/db')
 const port = process.env.PORT // 5000 // Definimos un puerto 
+
+connectDB()
 
 const app = express() // Creamos la aplicacion e indicamos que es de express
 
