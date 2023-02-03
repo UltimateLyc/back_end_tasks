@@ -47,7 +47,8 @@ const deleteTask = asyncHandler(async (req, res) => {
         throw new Error('Task not found')
     }
 
-    const deleteTarea = await task.findByIdAndRemove(req.params.id)
+    // const deleteTarea = await task.findByIdAndRemove(req.params.id) // Forma uan de borrar la tarea
+    await tarea.remove() // segunda forma de borrar
 
     res.status(200).json(deleteTarea)
 })
