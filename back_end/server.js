@@ -25,7 +25,8 @@ app.get('/api/tasks', (req, res) => {
 app.use(express.json()) // Indica a la aplicacion que usaremos JSON
 app.use(express.urlencoded({extended: false})) // Sirve para que pueda recibir datos y su forma de encriptacion
 
-app.use('/api/tasks', require('./routes/tasksRoutes'))
+app.use('/api/tasks', require('./routes/taskRoutes')) // Ruta para tareas
+app.use('/api/users', require('./routes/userRoutes')) // Ruta para users
 
 app.use(errorHandler)
 
