@@ -45,15 +45,46 @@ const registrarUser = asyncHandler(async(req, res) => {
 })
 
 const loginrUser = asyncHandler(async(req, res) => {
+
+    const {email, password} = req.body
+
+    // Verificacion que el email y el password esten bien ingresados
+    const user = await User.findOne({email})
+    if(user && (await bcrypt.compare(password, user.password))) { // bcrypt compara el pasword enviado con el guardado
+        res.json({
+            _id: user.id,
+            name: user.name,
+            email: user.email,
+            token: genereteToken(user._id)
+        })
+    } else {
+        res.status(400)
+        throw new Error('Credenciales Incorrectas')
+    }
+
     res.json({
         message: 'Login Usuario'
     })
 })
 
-const dataUser = asyncHandler(async(req, res) => {
-    res.json({
-        message: 'data Usuario'
+// Generacion de toket
+const genereteToken = (id) => {
+    return jwt.sign({id}, process.env.JWT_SECRET, {
+        expiresIn: '30d'
     })
+}
+
+const dataUser = asyncHandler(async(req, res) => {
+    const{_id, name, email} = req.user
+
+    res.status(200).json({
+        id: _id,
+        name,
+        email
+
+    })
+
+    
 })
 
 
